@@ -1,0 +1,24 @@
+name: Weekly experiment report
+
+on:
+  schedule:
+    - cron: "0 13 * * MON" # Mondays 13:00 UTC = 9:00 AM ET
+  workflow_dispatch: # the "run it now" button, used for the live demo
+
+permissions:
+  contents: write # lets the run commit the report back to the repo
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # Step 1: check out the repo so Claude can see the data and the skill
+      - uses: actions/checkout@v4
+
+      # Step 2: run Claude Code with one instruction: run the skill
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: "/experiment-report"
+          claude_args: "--max-turns 15"
