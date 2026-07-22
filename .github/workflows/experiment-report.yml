@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write # lets the run commit the report back to the repo
+  id-token: write # lets the action authenticate with GitHub
 
 jobs:
   report:
