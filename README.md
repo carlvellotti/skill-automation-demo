@@ -31,3 +31,11 @@ Built for the NYT Maker Week Skills Incubator. Copy this repo as a template for 
 ## Other skills you could run this way
 
 Weekly competitive scans, Monday status drafts from tickets and notes, metric anomaly watches that only speak up when something moves, stale-ticket sweeps, a monthly pass that tidies your project folder. Same yaml every time. Only the skill file changes.
+
+## Three gotchas we hit so you don't have to
+
+1. **`id-token: write`** must be in the permissions block or the action fails immediately with an OIDC error.
+2. **Claude can't write files by default** in automation mode. Without `--allowedTools` in `claude_args`, every file write is silently denied and the run still shows green. Grant exactly what the skill needs, nothing more.
+3. **Commit explicitly.** The action doesn't reliably commit what Claude produced, and it scrubs the checkout credentials after its step. The final workflow step commits `reports/` and pushes using the workflow's own token.
+
+All three fixes are visible in the workflow file, which is the whole story of this repo: the yaml is plumbing you copy once, the skill is the part you own.
