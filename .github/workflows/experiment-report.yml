@@ -22,7 +22,7 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: "/experiment-report"
-          claude_args: "--max-turns 15"
+          claude_args: "--max-turns 15 --allowedTools Read,Glob,Grep,Write,Bash(python3:*),Bash(date:*)"
 
       # Step 3: commit whatever landed in reports/
       - name: Commit the report
